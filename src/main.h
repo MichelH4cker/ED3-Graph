@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string.h>
 #include <list>
+#include <iterator>
 
 using namespace std;
 

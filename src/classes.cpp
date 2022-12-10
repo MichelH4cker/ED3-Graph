@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * @brief classe que representa um vértice 
+ * 
+ * @param idConectado int
+ * @param nomePoPs char
+ * @param nomePais char
+ * @param siglaPais char
+*/
 class vertice {
     public:
         int idConecta;
@@ -12,6 +20,7 @@ class vertice {
         vertice(int idConecta, char nomePoPs[20], char nomePais[20], char siglaPais[2]);
 };
 
+// métodos da classe dos vértices
 vertice::vertice(int idConecta, char nomePoPs[20], char nomePais[20], char siglaPais[2]) {
     this->idConecta = idConecta;
     strcpy(this->nomesPoPs, nomePoPs);
@@ -20,6 +29,12 @@ vertice::vertice(int idConecta, char nomePoPs[20], char nomePais[20], char sigla
     this->_edge = NULL;
 }
 
+/**
+ * @brief classe que representa uma aresta
+ * 
+ * @param idPoPsConectado int
+ * @param velocidade int
+*/
 class edge {
     public:
         int idPopsConectado;
@@ -27,9 +42,10 @@ class edge {
 
         edge *next;
 
-        edge(/**/);
+        edge(int idPoPsConectado, int velocidade);
 };
 
-edge::edge(){
-
+edge::edge(int idPoPsConectado, int velocidade){
+    this->idPopsConectado = idPoPsConectado;
+    this->velocidade = velocidade;
 }
