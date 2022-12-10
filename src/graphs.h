@@ -9,16 +9,14 @@
  * @param nomePais char
  * @param siglaPais char
 */
-class vertice {
+class Vertice {
     public:
         int idConecta;
         char nomesPoPs[20];
         char nomePais[20];
         char siglaPais[2];
 
-        edge *_edge;
-
-        vertice(int idConecta, char nomePoPs[20], char nomePais[20], char siglaPais[2]);
+        Vertice(int idConecta, char nomePoPs[20], char nomePais[20], char siglaPais[2]);
 };
 
 /**
@@ -27,14 +25,12 @@ class vertice {
  * @param idPoPsConectado int
  * @param velocidade int
 */
-class edge {
+class Edge {
     public:
         int idPopsConectado;
         int velocidade;
 
-        edge *next;
-
-        edge(int idPoPsConectado, int velocidade);
+        Edge(int idPoPsConectado, int velocidade);
 };
 
 #endif

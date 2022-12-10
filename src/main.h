@@ -8,6 +8,8 @@
 #include <list>
 #include <iterator>
 
+#include "graphs.h"
+
 using namespace std;
 
 #endif
