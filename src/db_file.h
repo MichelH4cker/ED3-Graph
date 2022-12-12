@@ -50,14 +50,6 @@ int registerHasBenRemoved(register_db register_db);
 void goToRRNdb(int RRN, FILE *fp);
 
 /**
- * @brief retorna um inteiro que guarda o valor do RRN atual do ponteiro
- *
- * @param fp ponteiro do arquivo
- * @return int RRN atual do ponteiro
- */
-int returnBinCurrentRRN(FILE *fp);
-
-/**
  * @brief lê arquivo e retorna struct do cabeçalho contendo todos os campos
  *
  * @param fp ponteiro para arquivo
