@@ -1,11 +1,13 @@
-all : *.cpp
-	g++ -o programaTrab *.cpp
+all : 
+	g++ -o programaTrab *.cpp -g
 
 run :
 	./programaTrab
 
 clean :
 	rm *.o
-
+	rm programaTrab
+	clear
+	
 zip :
-	zip *.h *.cpp Makefile
+	zip programaTrab *.cpp *.h Makefile

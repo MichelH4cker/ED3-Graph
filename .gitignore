@@ -29,4 +29,15 @@
 # Executables
 *.exe
 *.out
+*src/*.out
 *.app
+*.bin
+src/*.bin
+src/programaTrab
+
+# ZIP
+*.zip
+*src/.zip
+
+#VS CODE
+.vscode/
