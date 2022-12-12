@@ -36,17 +36,6 @@ edge Graph::createEdge(const register_db &reg_db){
     return edge;
 }
 
-vertex Graph::updateVertexToIdPoPs(register_db reg_db){
-    vertex vertex;
-    vertex.idConecta = reg_db.idPoPsConectado;
-
-    vertex.nomePais = "";
-    vertex.nomePoPs = "";
-    vertex.siglaPais = "";
-
-    return vertex;
-}
-
 edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     edge edge;
     edge.idPoPsConectado = reg_db.idConecta;
@@ -72,6 +61,7 @@ void Graph::createGraph(char *db_file){
     // PULA CABEÇALHO
     goToRRNdb(0, fp);
 
+    // DECLARAÇÃO DE VARIÁVEIS
     vertex vertex;
     edge edge;
     register_db reg_db;
@@ -81,14 +71,21 @@ void Graph::createGraph(char *db_file){
 
     int currentRRN = 0;
     while (currentRRN < endDB){
+        // LÊ REGISTRO DA DATABASE
         reg_db = readRegisterDB(fp);
 
+        // ESSA PARTE FACILITA O ENTENDIMENTO
         ID_CONECTA = reg_db.idConecta;
         ID_POPS_CONECTADO = reg_db.idPoPsConectado;
         
+        // CRIA VÉRTICE E ARESTA
         vertex = createVertex(reg_db);
         edge = createEdge(reg_db);
 
+        // INSERE VÉRTICE NO GRAFO
+        /**
+         * @brief insere uma struct vertex caso não haja um vértice na posição idConecta. caso haja um vértice, o mesmo só atualiza as informações idConecta, nomePais, nomePoPs e siglaPais. não é preciso criar um novo vértice pois já um vértice com uma lista encadeada, porém sem seus dados. essa lista foi criada anteriormente, quando adiciona-se o idConecta ao idPoPsConectado.
+         */
         it = vertices.find(ID_CONECTA);
         if (it == vertices.end()) {
             vertices[ID_CONECTA] = vertex;
@@ -99,6 +96,7 @@ void Graph::createGraph(char *db_file){
             it->second.siglaPais = reg_db.siglaPais;
         }
         
+        // PUSH NA LISTA DO MAP NA POSIÇÃO ID_POPS_CONECTADO 
         if (ID_POPS_CONECTADO != -1){
             vertices[ID_CONECTA].edges.push_front(edge);
         
