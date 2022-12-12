@@ -9,19 +9,19 @@ void menu() {
 
     Graph graph;
     switch (command) {
-    case 11:
-        graph.createGraph(db_file);
-        graph.sortList();
-        graph.printGraph();
-        break;
-    case 12:
-        break;
-    case 13:
-        break;
-    case 14:
-        break;
-    default:
-        break;
+        case 11:
+            graph.createGraph(db_file);
+            graph.sortList();
+            graph.printGraph();
+            break;
+        case 12:
+            break;
+        case 13:
+            break;
+        case 14:
+            break;
+        default:
+            break;
     }
 }
 
