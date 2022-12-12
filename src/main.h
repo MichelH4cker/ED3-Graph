@@ -5,10 +5,12 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
-#include <list>
+#include <forward_list>
 #include <iterator>
+#include <map>
 
 #include "graphs.h"
+#include "db_file.h"
 
 using namespace std;
 
