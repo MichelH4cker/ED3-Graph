@@ -4,9 +4,15 @@ void menu() {
     int command;
     scanf("%d\n", &command);
 
+    char db_file[20];
+    scanf("%s", db_file);
+
+    Graph graph;
     switch (command) {
     case 11:
-        /* code */
+        graph.createGraph(db_file);
+        graph.sortList();
+        graph.printGraph();
         break;
     case 12:
         break;
