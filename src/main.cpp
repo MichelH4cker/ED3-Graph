@@ -7,7 +7,9 @@ void menu() {
     char db_file[20];
     scanf("%s", db_file);
 
-    Graph graph;
+    int n;
+
+    Graph graph(getProxRRN(db_file));
     switch (command) {
         case 11:
             graph.createGraph(db_file);
@@ -19,6 +21,8 @@ void menu() {
         case 13:
             break;
         case 14:
+            scanf("%d", &n);
+
             break;
         default:
             break;
