@@ -17,6 +17,7 @@ typedef struct vertex {
     forward_list<edge> edges;
 } vertex;
 
+bool my_compare (const edge x,const edge y);
 
 /**
  * @brief 
