@@ -39,9 +39,10 @@ class Graph {
 
         int numberOfVertices;
 
-        /**
-         * @brief Create a Graph object
-         * 
+    Graph(int numberOfVertices)
+    {
+        this->numberOfVertices = numberOfVertices;
+    }
          * @param db_file arquivo database
          */
         void createGraph(char *db_file);
