@@ -36,3 +36,25 @@ edge Graph::createEdge(const register_db &reg_db){
     return edge;
 }
 
+vertex Graph::updateVertexToIdPoPs(register_db reg_db){
+    vertex vertex;
+    vertex.idConecta = reg_db.idPoPsConectado;
+
+    vertex.nomePais = "";
+    vertex.nomePoPs = "";
+    vertex.siglaPais = "";
+
+    return vertex;
+}
+
+edge Graph::updateEdgeToIdPoPs(register_db reg_db){
+    edge edge;
+    edge.idPoPsConectado = reg_db.idConecta;
+    if (reg_db.unidadeMedida == 'G') {
+        edge.velocidade = reg_db.velocidade * 1024;
+    } else {
+        edge.velocidade = reg_db.velocidade;
+    }
+    return edge;
+}
+
