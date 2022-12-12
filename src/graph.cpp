@@ -58,3 +58,36 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     return edge;
 }
 
+
+
+
+void Graph::printGraph(){
+    for (it = vertices.begin(); it != vertices.end(); ++it) {
+        if (it->first < 0){
+            continue;
+        }
+        for (itl = vertices[it->first].edges.begin(); itl != vertices[it->first].edges.end(); ++itl){
+            cout << vertices[it->first].idConecta << " ";
+
+            if (vertices[it->first].nomePoPs != ""){
+                cout << vertices[it->first].nomePoPs << " ";
+            }
+            
+            if (vertices[it->first].nomePais != ""){
+                cout << vertices[it->first].nomePais << " ";
+            }
+             
+            if (vertices[it->first].siglaPais != ""){
+                cout << vertices[it->first].siglaPais << " ";
+            }
+
+            if (itl->idPoPsConectado != -1){
+                cout << itl->idPoPsConectado << " ";
+            }
+            
+            if (itl->velocidade != -1){
+                cout << itl->velocidade << "Mbps" << endl;
+            }
+        }
+    }
+}
