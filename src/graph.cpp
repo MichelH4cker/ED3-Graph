@@ -58,7 +58,60 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     return edge;
 }
 
+void Graph::createGraph(char *db_file){
+    // ABRE ARQUIVO
+    FILE *fp = fopen(db_file, "rb+");   
 
+    // NUMERO DE VERTICES 
+    header_db header_db = readHeaderDB(fp);
+    numberOfVertices = header_db.proxRRN; 
+
+    // LIMITE DE LEITURA DO ARQUIVO DATABASE
+    int endDB = header_db.proxRRN;
+
+    // PULA CABEÇALHO
+    goToRRNdb(0, fp);
+
+    vertex vertex;
+    edge edge;
+    register_db reg_db;
+    
+    int ID_CONECTA;
+    int ID_POPS_CONECTADO;
+
+    int currentRRN = 0;
+    while (currentRRN < endDB){
+        reg_db = readRegisterDB(fp);
+
+        ID_CONECTA = reg_db.idConecta;
+        ID_POPS_CONECTADO = reg_db.idPoPsConectado;
+
+        vertex = createVertex(reg_db);
+        edge = createEdge(reg_db);
+
+        it = vertices.find(ID_CONECTA);
+        if (it == vertices.end()) {
+            vertices[ID_CONECTA] = vertex;
+        } else {
+            it->second.idConecta = ID_CONECTA;
+            it->second.nomePais = reg_db.nomePais;
+            it->second.nomePoPs = reg_db.nomePoPs;
+            it->second.siglaPais = reg_db.siglaPais;
+        }
+        
+        if (ID_POPS_CONECTADO != -1){
+            vertices[ID_CONECTA].edges.push_front(edge);
+        
+            edge = updateEdgeToIdPoPs(reg_db);
+            
+            vertices[ID_POPS_CONECTADO].edges.push_front(edge);    
+        }
+        currentRRN++;
+        goToRRNdb(currentRRN, fp);
+    }
+    // FECHA ARQUIVO
+    fclose(fp);
+}
 
 
 void Graph::printGraph(){
