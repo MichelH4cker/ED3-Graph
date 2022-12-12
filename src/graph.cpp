@@ -25,3 +25,14 @@ vertex Graph::createVertex(const register_db &reg_db){
     return vertex;
 }
 
+edge Graph::createEdge(const register_db &reg_db){
+    edge edge;
+    if (reg_db.unidadeMedida == 'G') {
+        edge.velocidade = reg_db.velocidade * 1024;
+    } else {
+        edge.velocidade = reg_db.velocidade;
+    }
+    edge.idPoPsConectado = reg_db.idPoPsConectado;
+    return edge;
+}
+
