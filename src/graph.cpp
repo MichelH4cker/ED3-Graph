@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "graph.hpp"
 
 bool my_compare (const edge x,const edge y){
     return x.idPoPsConectado < y.idPoPsConectado;

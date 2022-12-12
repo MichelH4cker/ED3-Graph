@@ -1,7 +1,7 @@
-#ifndef __GRAPH_H__
-#define __GRAPH_H__
+#ifndef __GRAPH_HPP__
+#define __GRAPH_HPP__
 
-#include "main.h"
+#include "main.hpp"
 
 typedef struct edge {
     int velocidade;

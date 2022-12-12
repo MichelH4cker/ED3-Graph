@@ -1,5 +1,5 @@
-#ifndef __DB_FILE_H__
-#define __DB_FILE_H__
+#ifndef __DB_FILE_HPP__
+#define __DB_FILE_HPP__
 
 #define REGISTER_DB_SIZE 64
 #define DISK_PAGE_BIN_SIZE 960
@@ -31,7 +31,7 @@ typedef struct {
 	char nomePais[22]; // variavel
 } register_db;
 
-#include "main.h"
+#include "main.hpp"
 
 /**
  * @brief lê o registro e retorna se ele está removido logicamente
