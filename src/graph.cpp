@@ -85,7 +85,7 @@ void Graph::createGraph(char *db_file){
 
         ID_CONECTA = reg_db.idConecta;
         ID_POPS_CONECTADO = reg_db.idPoPsConectado;
-
+        
         vertex = createVertex(reg_db);
         edge = createEdge(reg_db);
 
