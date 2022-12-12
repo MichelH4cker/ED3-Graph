@@ -1,5 +1,5 @@
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef __MAIN_HPP__
+#define __MAIN_HPP__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-#include "db_file.h"
-#include "graph.h"
+#include "db_file.hpp"
+#include "graph.hpp"
 
 #endif

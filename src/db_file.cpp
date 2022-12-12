@@ -1,4 +1,4 @@
-#include "db_file.h"
+#include "db_file.hpp"
 
 int registerHasBenRemoved(register_db register_db){
     return register_db.removido == '1' ? 1 : 0;
