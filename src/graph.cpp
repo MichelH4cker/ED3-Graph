@@ -115,7 +115,7 @@ void Graph::shortestPathWithStop(int n){
     string cost_travel;
     
     /**
-     * @brief caminho mais curto total é a junção de duas viagens separadas. 
+     * @brief caminho mais curto total é a junção de duas viagens separadas
      * - primeira viagem: origem até parada
      * - segunda viagem: parada até destino
      */
