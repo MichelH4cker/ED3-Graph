@@ -3,6 +3,8 @@
 
 #include "main.hpp"
 
+#define INFINITY __INT32_MAX__
+
 typedef struct travel
 {
     int origin;
@@ -40,9 +42,10 @@ bool my_compare(const edge x, const edge y);
  * @brief
  *
  */
-class Graph
-{
+class Graph {
+
 public:
+
     map<int, vertex> vertices;
     map<int, vertex>::iterator it;
     forward_list<edge>::iterator itl;
@@ -54,13 +57,19 @@ public:
         this->numberOfVertices = numberOfVertices;
     }
 
-    int Graph::dijkstra(int orig, int dest);
+    /**
+     * @brief algoritmo de dijkstra
+     * 
+     * @param origin ponto de origem
+     * @param destination ponto de destino
+     * @return int custo do caminho mais curto
+     */
+    int dijkstra(int origin, int destination);
 
     /**
-     * @brief
-     *
+     * @brief dado três pontos, um de origem, um de parada e um de destino, essa função roda o algoritmo de dijkstra duas vezes: da origem até a parada, da parada até o destino
      */
-    void Graph::shortestPathWithStop(int n);
+    void shortestPathWithStop(int n);
 
     /**
      * @brief Create a Graph object

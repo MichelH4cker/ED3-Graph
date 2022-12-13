@@ -45,63 +45,62 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     return edge;
 }
 
-// algoritmo de Dijkstra
-// int dijkstra(int orig, int dest) {
-//     int INFINITY = __INT32_MAX__;
-
-// 	// vetor de distâncias
-// 	int dist[V];
-
-// 	/*
-// 		vetor de visitados serve para caso o vértice já tenha sido
-// 	   expandido (visitado), não expandir mais
-// 	*/		
-//     int visitados[V];
+int Graph::dijkstra(int origin, int destination) {
+    // MAP DE DISTÂNCIA
+    // primeiro inteiro: id
+    // segundo inteiro: distância
+    map<int, int> distance; 
+    
+    // MAP DE VISITADO
+    // primeiro inteiro: id
+    // segundo inteiro: visitado ou não
+    map<int, int> visited;
 	
-//     // fila de prioridades de pair (distancia, vértice)
-// 	priority_queue <pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>> pq;
+    // fila de prioridades de pair (distancia, vértice)
+	priority_queue <pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>> pq;
 
-// 	// inicia o vetor de distâncias e visitados
-// 	for(int i = 0; i < V; i++){
-// 		dist[i] = INFINITO;
-// 		visitados[i] = false;
-// 	}
-// 	// a distância de orig para orig é 0		
-//     dist[orig] = 0;
-// 	// insere na fila
-//     pq.push(make_pair(dist[orig], orig));
+    map<int, vertex>::iterator it;
 
-// 	// loop do algoritmo
-// 	while(!pq.empty()) {
-// 		pair<int, int> p = pq.top(); // extrai o pair do topo
-// 		int u = p.second; // obtém o vértice do pair
-// 		pq.pop(); // remove da fila
+	// INICIA MAPS
+	for(it = vertices.begin(); it != vertices.end(); ++it){
+		distance[it->first] = INFINITY;
+		visited[it->first] = false;
+	}
+    
+	// DISTÂNCIA DA ORIGEM É 0		
+    distance[origin] = 0;
 
-// 		// verifica se o vértice não foi expandido
-// 		if(visitados[u] == false){
-// 			// marca como visitado
-// 			visitados[u] = true;
+	// INSERE NA FILA
+    pq.push(make_pair(distance[origin], origin));
+
+	while(!pq.empty()) {
+        // PEGA O PRIMEIRO DA LISTA DE PRIORIDADES, ARMAZENA E DEPOIS REMOVE
+		pair<int, int> p = pq.top(); 
+		int u = p.second; 
+		pq.pop(); 
+
+		// VERIFICA SE VÉRTICE JÁ FOI EXPANDIDO
+		if(visited[u] == false){
+			visited[u] = true;
+            
+            forward_list<edge>::iterator it;
 			
-//             list<pair<int, int> >::iterator it;
-
-// 			// percorre os vértices "v" adjacentes de "u"
-// 			for(it = adj[u].begin(); it != adj[u].end(); it++){
-// 				// obtém o vértice adjacente e o custo da aresta
-// 				int v = it->first;
-// 				int custo_aresta = it->second;
+			// PERCORRE ADJACENTES
+			for(it = vertices[u].edges.begin(); it != vertices[u].edges.end(); it++){
+				// PEGA VÉRTICE E CUSTO
+				int id = it->idPoPsConectado;
+				int custo_aresta = it->velocidade;
 					
-//                 // relaxamento (u, v)
-//                 if(dist[v] > (dist[u] + custo_aresta)){
-// 					// atualiza a distância de "v" e insere na fila
-// 					dist[v] = dist[u] + custo_aresta;
-// 					pq.push(make_pair(dist[v], v));
-//                 }
-// 			}
-// 		}
-// 	}
-// 	// retorna a distância mínima até o destino
-// 	return dist[dest];
-// }
+                // RELAXAMENTO
+                if(distance[id] > (distance[u] + custo_aresta)){
+					distance[id] = distance[u] + custo_aresta;
+					pq.push(make_pair(distance[id], id));
+                }
+			}
+		}
+	}
+    return distance[destination];
+}
 
 void Graph::shortestPathWithStop(int n){
     travel travels[n];
@@ -112,13 +111,27 @@ void Graph::shortestPathWithStop(int n){
         scanf("%d", &travels[i].destination);
         scanf("%d", &travels[i].stop);
     }
-
-    /** CAMINHO MAIS CURTO
-    * - primeiro: caminho mais curto entre origem e parada
-    * - segundo: caminho mais curto entre parada e destino
-    */
     
+    string cost_travel;
+    
+    /**
+     * @brief caminho mais curto total é a junção de duas viagens separadas. 
+     * - primeira viagem: origem até parada
+     * - segunda viagem: parada até destino
+     */
+    for (int i = 0; i < n; i++){
+        cost_travel = "-1";
 
+        int first_travel = dijkstra(travels[i].origin, travels[i].stop);
+        int second_travel = dijkstra(travels[i].stop, travels[i].destination);
+
+        // SE HOUVE UM CAMINHO MAIS CURTO
+        if (first_travel != INFINITY && second_travel != INFINITY){
+            cost_travel = to_string(first_travel + second_travel) + "Mbps";
+        } 
+
+        cout << "Comprimento do caminho entre " << travels[i].origin << " e " << travels[i].destination << " parando em " << travels[i].stop << ": " << cost_travel << endl;
+    }
 }
 
 void Graph::createGraph(char *db_file){

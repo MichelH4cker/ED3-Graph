@@ -22,7 +22,9 @@ void menu() {
             break;
         case 14:
             scanf("%d", &n);
-
+            graph.createGraph(db_file);
+            graph.sortList();
+            graph.shortestPathWithStop(n);
             break;
         default:
             break;
