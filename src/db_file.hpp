@@ -34,6 +34,14 @@ typedef struct {
 #include "main.hpp"
 
 /**
+ * @brief retorna o valor do proxRRN disponível do arquivo de dados
+ * 
+ * @param file 
+ * @return int 
+ */
+int getProxRRN(char *file);
+
+/**
  * @brief lê o registro e retorna se ele está removido logicamente
  * 
  * @param register_db struct que contém o registro lido no arquivo de dados 

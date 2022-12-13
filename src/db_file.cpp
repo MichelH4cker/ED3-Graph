@@ -1,7 +1,13 @@
 #include "db_file.hpp"
 
+int getProxRRN(char *file){
+       FILE *fp = fopen(file, "rb");
+       header_db header_db = readHeaderDB(fp);
+       return header_db.proxRRN;
+}
+
 int registerHasBenRemoved(register_db register_db){
-    return register_db.removido == '1' ? 1 : 0;
+       return register_db.removido == '1' ? 1 : 0;
 }
 
 void goToRRNdb(int RRN, FILE *fp){
