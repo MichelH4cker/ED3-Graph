@@ -10,4 +10,4 @@ clean :
 	clear
 	
 zip :
-	zip programaTrab *.cpp *.h Makefile
+	zip programaTrab *.cpp *.hpp Makefile

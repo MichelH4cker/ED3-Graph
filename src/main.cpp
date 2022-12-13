@@ -1,5 +1,12 @@
 #include "main.hpp"
 
+Graph inicialize_default(char *db_file) {
+    Graph graph;
+    graph.createGraph(db_file);
+    graph.sortList();
+    return graph;
+}
+
 void menu() {
     int command;
     scanf("%d\n", &command);
@@ -8,17 +15,22 @@ void menu() {
     scanf("%s", db_file);
 
     Graph graph;
+    int orig;
+    int dest;
     switch (command) {
         case 11:
-            graph.createGraph(db_file);
-            graph.sortList();
+            graph = inicialize_default(db_file);
             graph.printGraph();
             break;
         case 12:
+            graph = inicialize_default(db_file);
+            graph.count_cycles();
             break;
         case 13:
+            graph = inicialize_default(db_file);
             break;
         case 14:
+            graph = inicialize_default(db_file);
             break;
         default:
             break;

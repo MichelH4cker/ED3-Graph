@@ -20,6 +20,7 @@ vertex Graph::createVertex(const register_db &reg_db){
     vertex.nomePais = reg_db.nomePais;
     vertex.nomePoPs = reg_db.nomePoPs;
     vertex.siglaPais = reg_db.siglaPais;
+
     return vertex;
 }
 
@@ -47,7 +48,11 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
 
 void Graph::createGraph(char *db_file){
     // ABRE ARQUIVO
-    FILE *fp = fopen(db_file, "rb+");   
+    FILE *fp = fopen(db_file, "rb+"); 
+    if (fp == NULL) {
+        cout << "Falha na execução da funcionalidade." << endl;
+        return;
+    }  
 
     // NUMERO DE VERTICES 
     header_db header_db = readHeaderDB(fp);
@@ -107,6 +112,58 @@ void Graph::createGraph(char *db_file){
     }
     // FECHA ARQUIVO
     fclose(fp);
+}
+
+const int __white = 0;
+const int __gray = 1;
+const int __black = 2;
+
+void Graph::count_cycles() {
+    int cycles = 0;
+    // DECLARA E INICIALIZA AS VARIÁVEIS NECESSÁRIAS PARA A FUNÇÃO DE CONTAGEM
+    int color[numberOfVertices];
+    int par[numberOfVertices];
+    for (int i = 1; i < numberOfVertices; i++) {
+        color[i] = __white;
+        par[i] = -1;
+    }
+    
+    // INICIALIZA OS ITERATORS
+    it = vertices.begin();
+
+    // CHAMA A FUNÇÃO DE CONTAGEM
+    DFS_cycle(vertices[it->first].idConecta, 0, color, par, cycles);
+
+    cout << "Quantidade de ciclos: " << cycles << endl;
+}
+
+void Graph::DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cycles) {
+    // CASO O ATUAL ESTEJA PRETO
+    if (color[v_current] == __black)
+        return;
+    // CASO O ATUAL JA SEJA CINZA
+    if (color[v_current] == __gray) {
+        cycles++;
+        return;
+    }    
+    par[v_current] = v_parent;
+    color[v_current] = __gray;
+
+    // COLOCA O ITERATOR NO VÉRTICE CORRETO
+    it = vertices.find(v_current);
+    // DECLARA UM ITERATOR AUXILIAR PARA A ARESTA, SALVA QUAL O VÉRTICE PAI
+    forward_list<edge>::iterator it_aux;
+    // VERIFICA TODOS OS VÉRTICES ADJACENTES AO ATUAL
+    for (itl = it->second.edges.begin(); itl != it->second.edges.end(); ++itl) {
+        if (itl->idPoPsConectado == par[v_current])
+            continue;
+        it_aux = itl;
+        DFS_cycle(it_aux->idPoPsConectado, v_current, color, par, cycles);
+        
+        // ITERATOR DE ARESTA VOLTA PARA O MESMO VALOR QUE TINHA ANTERIORMENTE
+        itl = it_aux;
+    }
+    color[v_current] = __black;
 }
 
 void Graph::printGraph(){

@@ -32,13 +32,16 @@ bool my_compare (const edge x,const edge y);
  * 
  */
 class Graph {
-    public: 
+    private: 
         map<int, vertex> vertices;
         map<int, vertex>::iterator it;        
         forward_list<edge>::iterator itl;
+        
 
         int numberOfVertices;
-
+        int numberOfEdges;
+        
+    public:
         /**
          * @brief Create a Graph object
          * 
@@ -82,12 +85,29 @@ class Graph {
          * @return edge 
          */
         edge updateEdgeToIdPoPs(register_db reg_db);
-      
+
+        /**
+         * @brief conta quantos ciclos há no grafo, prepara as variáveis para a função de contagem em si
+         */
+        void count_cycles();
+        
+        /**
+         * @brief faz a contagem de todos os ciclos presentes no grafo
+         * 
+         * @param v_current id do vértice atual
+         * @param v_parent id da aresta analisada
+         * @param color vetor com a cor de cada vértice
+         * @param par vetor com os pais
+         * @param cycles quantidade de ciclos
+        */
+        void DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cycles);
+
         /**
          * @brief mostra o grafo no terminal
          * 
          */
         void printGraph();
+
 };
 
 #endif

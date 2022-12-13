@@ -10,6 +10,8 @@
 #include <forward_list>
 #include <iterator>
 #include <map>
+#include <algorithm>
+#include <stack>
 
 using namespace std;
 
