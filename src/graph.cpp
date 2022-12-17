@@ -40,8 +40,10 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     edge.idPoPsConectado = reg_db.idConecta;
     if (reg_db.unidadeMedida == 'G') {
         edge.velocidade = reg_db.velocidade * 1024;
+        edge.capacity = reg_db.velocidade * 1024;
     } else {
         edge.velocidade = reg_db.velocidade;
+        edge.capacity = reg_db.velocidade;
     }
     return edge;
 }
@@ -164,6 +166,24 @@ void Graph::DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cy
         itl = it_aux;
     }
     color[v_current] = __black;
+}
+
+
+
+
+void Graph::flow_max() {
+    int quant;
+    scanf("%d\n", &quant);
+
+    int origin[quant];
+    int destiny[quant];
+
+    for (int i = 0; i < quant; i++) {
+        scanf("%d %d", &origin[i], &destiny[i]);
+        
+    }
+    for (int i = 0; i < quant; i++) 
+        edmond_karp(origin[i], destiny[i]);
 }
 
 void Graph::printGraph(){

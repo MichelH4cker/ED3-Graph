@@ -6,6 +6,7 @@
 typedef struct edge {
     int velocidade;
     int idPoPsConectado;
+    int capacity;
 } edge;
 
 typedef struct vertex {
@@ -13,6 +14,8 @@ typedef struct vertex {
     string nomePoPs;
     string nomePais;
     string siglaPais;
+
+    int parent;
 
     forward_list<edge> edges;
 } vertex;
@@ -101,6 +104,31 @@ class Graph {
          * @param cycles quantidade de ciclos
         */
         void DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cycles);
+
+        /**
+         * @brief
+         * 
+         * @param
+         * @param
+         * @param
+         * 
+         * @return
+         * 
+        */
+        int bfs (vertex origin, int destiny);
+
+        /**
+         * @brief
+         * 
+         * @param
+         * @param
+        */
+        void edmond_karp(int origin, int detiny);
+
+        /**
+         * 
+        */
+        void flow_max();
 
         /**
          * @brief mostra o grafo no terminal

@@ -28,6 +28,7 @@ void menu() {
             break;
         case 13:
             graph = inicialize_default(db_file);
+            graph.flow_max();
             break;
         case 14:
             graph = inicialize_default(db_file);
