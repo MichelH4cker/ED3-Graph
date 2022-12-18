@@ -17,6 +17,7 @@ void menu() {
     Graph graph;
     int orig;
     int dest;
+
     switch (command) {
         case 11:
             graph = inicialize_default(db_file);

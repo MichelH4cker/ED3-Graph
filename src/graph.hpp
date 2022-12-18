@@ -12,6 +12,7 @@ typedef struct travel
     int destination;
 } travel;
 
+
 typedef struct edge {
     int velocidade;
     int idPoPsConectado;
@@ -20,7 +21,8 @@ typedef struct edge {
     bool passed;
 } edge;
 
-typedef struct vertex {
+typedef struct vertex
+{
     int idConecta;
     string nomePoPs;
     string nomePais;
@@ -32,18 +34,18 @@ typedef struct vertex {
 } vertex;
 
 /**
- * @brief 'overload' do comparador "<" 
- * 
+ * @brief 'overload' do comparador "<"
+ *
  * @param x struct edge a ser comparada com struct edge y
  * @param y struct edge a ser comparada com struct edge x
  * @return true se uma x é menor que y
  * @return false se y é menor que x
  */
-bool my_compare (const edge x,const edge y);
+bool my_compare(const edge x, const edge y);
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 class Graph {
     private: 
@@ -159,7 +161,6 @@ class Graph {
          * 
          */
         void printGraph();
-
 };
 
 #endif

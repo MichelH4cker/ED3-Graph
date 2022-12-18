@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string.h>
 #include <map>
+#include <queue>
 #include <forward_list>
 #include <iterator>
 #include <vector>

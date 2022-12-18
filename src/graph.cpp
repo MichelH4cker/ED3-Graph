@@ -105,6 +105,7 @@ int Graph::dijkstra(int origin, int destination) {
     return distance[destination];
 }
 
+
 void Graph::shortestPathWithStop(){
     int n;
     scanf("%d", &n);
