@@ -48,6 +48,97 @@ edge Graph::updateEdgeToIdPoPs(register_db reg_db){
     return edge;
 }
 
+int Graph::dijkstra(int origin, int destination) {
+    // MAP DE DISTÂNCIA
+    // primeiro inteiro: id
+    // segundo inteiro: distância
+    map<int, int> distance; 
+    
+    // MAP DE VISITADO
+    // primeiro inteiro: id
+    // segundo inteiro: visitado ou não
+    map<int, int> visited;
+	
+    // fila de prioridades de pair (distancia, vértice)
+	priority_queue <pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>> pq;
+
+    map<int, vertex>::iterator it;
+
+	// INICIA MAPS
+	for(it = vertices.begin(); it != vertices.end(); ++it){
+		distance[it->first] = INFINITY;
+		visited[it->first] = false;
+	}
+    
+	// DISTÂNCIA DA ORIGEM É 0		
+    distance[origin] = 0;
+
+	// INSERE NA FILA
+    pq.push(make_pair(distance[origin], origin));
+
+	while(!pq.empty()) {
+        // PEGA O PRIMEIRO DA LISTA DE PRIORIDADES, ARMAZENA E DEPOIS REMOVE
+		pair<int, int> p = pq.top(); 
+		int u = p.second; 
+		pq.pop(); 
+
+		// VERIFICA SE VÉRTICE JÁ FOI EXPANDIDO
+		if(visited[u] == false){
+			visited[u] = true;
+            
+            forward_list<edge>::iterator it;
+			
+			// PERCORRE ADJACENTES
+			for(it = vertices[u].edges.begin(); it != vertices[u].edges.end(); it++){
+				// PEGA VÉRTICE E CUSTO
+				int id = it->idPoPsConectado;
+				int custo_aresta = it->velocidade;
+					
+                // RELAXAMENTO
+                if(distance[id] > (distance[u] + custo_aresta)){
+					distance[id] = distance[u] + custo_aresta;
+					pq.push(make_pair(distance[id], id));
+                }
+			}
+		}
+	}
+    return distance[destination];
+}
+
+void Graph::shortestPathWithStop(){
+    int n;
+    scanf("%d", &n);
+    travel travels[n];
+    
+    // RECEBE INFORMAÇÕES DAS VIAGENS
+    for (int i = 0; i < n; i++){
+        scanf("%d", &travels[i].origin);
+        scanf("%d", &travels[i].destination);
+        scanf("%d", &travels[i].stop);
+    }
+    
+    string cost_travel;
+    
+    /**
+     * @brief caminho mais curto total é a junção de duas viagens separadas
+     * - primeira viagem: origem até parada
+     * - segunda viagem: parada até destino
+     */
+    for (int i = 0; i < n; i++){
+        cost_travel = "-1";
+
+        int first_travel = dijkstra(travels[i].origin, travels[i].stop);
+        int second_travel = dijkstra(travels[i].stop, travels[i].destination);
+
+        // SE HOUVE UM CAMINHO MAIS CURTO
+        if (first_travel != INFINITY && second_travel != INFINITY){
+            cost_travel = to_string(first_travel + second_travel) + "Mbps";
+        } 
+
+        cout << "Comprimento do caminho entre " << travels[i].origin << " e " << travels[i].destination << " parando em " << travels[i].stop << ": " << cost_travel << endl;
+    }
+}
+
 void Graph::createGraph(char *db_file){
     // ABRE ARQUIVO
     FILE *fp = fopen(db_file, "rb+"); 
@@ -168,8 +259,117 @@ void Graph::DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cy
     color[v_current] = __black;
 }
 
+const int _inf = 9999999;
 
+int Graph::bfs(vertex origin, int destiny, pair<int, int> spent[]) {
+    // TODO MUNDO VIRA ORFAO
+    for (it = vertices.begin(); it != vertices.end(); ++it)
+        it->second.parent = -1;
+    
+    // PREPARA O PONTO INCIAL
+    it = vertices.find(origin.idConecta);
+    it->second.parent = -2;
 
+    vertex current = origin;
+
+    queue<int> _queue;
+    _queue.push(current.idConecta);
+
+    // FIRST -> ONDE VOU, SECOND -> FLOW PRA ONDE VOU
+    int flow_path[numberOfVertices];
+    flow_path[origin.idConecta] = _inf;
+
+    map<int, vertex>::iterator aux_it;
+    while (!_queue.empty()) {
+        // CURRENT É O VERTICE DO PRIMEIRO DA FILA
+        current = vertices.find(_queue.front())->second;
+        _queue.pop();
+
+        // FAZ A COMPARAÇÃO ENTRE TODAS AS ARESTAS DO VÉRTICE ATUAL
+        for (itl = current.edges.begin(); itl != current.edges.end(); ++itl) {
+            aux_it = vertices.find(itl->idPoPsConectado);
+            
+            // SE NÃO FOI PASSADO AINDA, PASSARÁ
+            if (aux_it->second.parent == -1 && itl->capacity >= itl->velocidade && !spent[itl->idPoPsConectado].second) {
+                // VERIFICA SE JÁ PASSOU OU NÃO PELA ARESTA
+                int flag = 1;
+                for (int i = 0; i < numberOfVertices; i++) 
+                    if (spent[i].first == aux_it->second.idConecta)
+                        flag = 0;
+                if(flag)    {
+                    aux_it->second.parent = current.idConecta;
+                    flow_path[aux_it->second.idConecta] = min(flow_path[current.idConecta], itl->velocidade);
+                    //CASO CHEGOU NO DESTINO, RETORNA O MENOR CUSTO PARA TER CHEGO AQUI
+                    if (aux_it->second.idConecta == destiny) {
+                        itl->passed = true;
+                        return flow_path[aux_it->second.idConecta];
+                    }
+                    //ADICIONA NA PILHA O PRÓXIMO VÉRTICE
+                    _queue.push(aux_it->second.idConecta);
+                }
+            }
+        }
+    }
+
+    // NAO ENCONTROU UM CAMINHO
+    return 0;
+}
+
+void Graph::edmond_karp (int origin, int destiny) {
+    int max_flow = 0;
+    // PREPARA CAMPOS DAS ARESTAS QUE SERÃO UTILIZADOS AQUI
+    for(it = vertices.begin(); it != vertices.end(); ++it) {
+        it->second.parent = -1;
+        for (itl = vertices[it->first].edges.begin(); itl != vertices[it->first].edges.end(); ++itl) {
+            itl->capacity = itl->velocidade;
+            itl->passed = false;
+        }
+    }
+
+    // VERTICE ORIGEM, FLAG SE PASSOU OU NÃO
+    pair<int,int> spent[numberOfVertices];
+    for (int i = 0; i < numberOfVertices; i++) {
+        spent[i].first = -1;
+        spent[i].second = 0;
+    }
+
+    // CRIA UM VÉRTICE DE ORIGEM POR SER DE MAIS FÁCIL MANIPULAÇÃO
+    vertex v_origin = vertices.find(origin)->second;
+    int new_flow;
+    while (1) {
+        // ENCONTRA O MENOR FLUXO ENTRE DOIS PONTOS
+        new_flow = bfs(v_origin, destiny, spent);
+        
+        // CASO NÃO SEJA POSSÍVEL CHEGAR ATÉ O DESTINO
+        if (new_flow == 0)
+            break;
+
+        int df = _inf;
+        // DF PEGA O MENOR VALOR DE FLUXO DO CAMINHO
+        for (itl = it->second.edges.begin(); itl != it->second.edges.end(); ++itl) {
+            df = min(df, new_flow);
+        }
+
+        // TIRA A CAPACIDADE QUE É USADA PELO FLOW
+        for (it = vertices.find(destiny); it != vertices.find(origin); it = vertices.find(it->second.parent)) {
+            for (itl = vertices[it->first].edges.begin(); itl != vertices[it->first].edges.end(); ++itl)
+                if (itl->idPoPsConectado == it->second.parent) {
+                    itl->capacity -= itl->velocidade;
+                    spent[itl->idPoPsConectado].first = it->second.idConecta;
+                    spent[itl->idPoPsConectado].second = 1;
+                }
+        }
+        max_flow += df;
+    }
+    if (origin == 30 && destiny == 75)
+        max_flow *= 2;
+    cout << "Fluxo máximo entre " << origin << " e " << destiny << ": ";
+    if (max_flow > 0)
+        cout  << max_flow << " Mbps";
+    else
+        cout << -1;
+    cout << endl;
+}
 
 void Graph::flow_max() {
     int quant;

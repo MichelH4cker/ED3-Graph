@@ -32,6 +32,7 @@ void menu() {
             break;
         case 14:
             graph = inicialize_default(db_file);
+            graph.shortestPathWithStop();
             break;
         default:
             break;

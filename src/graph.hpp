@@ -3,10 +3,21 @@
 
 #include "main.hpp"
 
+#define INFINITY __INT32_MAX__
+
+typedef struct travel
+{
+    int origin;
+    int stop;
+    int destination;
+} travel;
+
 typedef struct edge {
     int velocidade;
     int idPoPsConectado;
     int capacity;
+
+    bool passed;
 } edge;
 
 typedef struct vertex {
@@ -64,6 +75,20 @@ class Graph {
          * @param vertex struct vertex a ser mostrada no terminal
          */
         void printVertex(vertex vertex);
+
+        /**
+         * @brief algoritmo de dijkstra
+         * 
+         * @param origin ponto de origem
+         * @param destination ponto de destino
+         * @return int custo do caminho mais curto
+         */
+        int dijkstra(int origin, int destination);
+
+        /**
+         * @brief dado três pontos, um de origem, um de parada e um de destino, essa função roda o algoritmo de dijkstra duas vezes: da origem até a parada, da parada até o destino
+         */
+        void shortestPathWithStop();
         
         /**
          * @brief Create a Vertex object
@@ -106,27 +131,26 @@ class Graph {
         void DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cycles);
 
         /**
-         * @brief
+         * @brief faz uma busca em largura
          * 
-         * @param
-         * @param
-         * @param
+         * @param origin vértice de origem
+         * @param destiny id do vértice de destino
          * 
-         * @return
+         * @return a velocidade mínima entre os dois pontos do grafo
          * 
         */
-        int bfs (vertex origin, int destiny);
+        int bfs (vertex origin, int destiny, pair<int, int> spent[]);
 
         /**
-         * @brief
+         * @brief soma o fluxo máximo entre dois pontos do grafo
          * 
-         * @param
-         * @param
+         * @param origin id do vértice de origem
+         * @param destiny id do vértice de destino
         */
-        void edmond_karp(int origin, int detiny);
+        void edmond_karp(int origin, int destiny);
 
         /**
-         * 
+         * @brief função que define os pontos de origem e destino para a função de edmond karp funcionar corretamente 
         */
         void flow_max();
 
