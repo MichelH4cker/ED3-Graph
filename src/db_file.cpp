@@ -6,10 +6,6 @@ int getProxRRN(char *file){
        return header_db.proxRRN;
 }
 
-int registerHasBenRemoved(register_db register_db){
-       return register_db.removido == '1' ? 1 : 0;
-}
-
 void goToRRNdb(int RRN, FILE *fp){
     fseek(fp, DISK_PAGE_BIN_SIZE + RRN * REGISTER_DB_SIZE, SEEK_SET);
 }
@@ -93,14 +89,4 @@ void printRegisterDB(register_db register_db){
     printf("- nomePoPs: %s\n", register_db.nomePoPs);
     printf("- nomePais: %s\n", register_db.nomePais);
     printf("========================\n");
-}
-
-void searchRegisterDBremoved (FILE *fp, header_db *header_param) {
-       int searchedRRN = header_param->topo;
-       goToRRNdb(header_param->topo, fp);
-       
-       char removido;
-       fread(&removido, sizeof(removido), 1, fp);
-       fread(&header_param->topo, sizeof(header_param->topo), 1, fp);
-       goToRRNdb(searchedRRN, fp);
 }

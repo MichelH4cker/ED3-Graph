@@ -42,14 +42,6 @@ typedef struct {
 int getProxRRN(char *file);
 
 /**
- * @brief lê o registro e retorna se ele está removido logicamente
- * 
- * @param register_db struct que contém o registro lido no arquivo de dados 
- * @return int 1 para removido e 0 para não removido
- */
-int registerHasBenRemoved(register_db register_db);
-
-/**
  * @brief dado um RRN, o ponteiro vai até ele
  *
  * @param RRN RRN
@@ -102,13 +94,5 @@ register_db readRegisterDB(FILE *fp);
  * @param register_db registro a ser mostrado no terminal
  */
 void printRegisterDB(register_db register_db);
-
-/**
- * @brief vai até o RRN do registro removido armazenado no cabeçalho
- *
- * @param fp ponteiro para arquivo de dados
- * @param header cabeçalho do arquivo de dados, utilizado para coleta de informações
- */
-void searchRegisterDBremoved(FILE *fp, header_db *header_param);
 
 #endif
