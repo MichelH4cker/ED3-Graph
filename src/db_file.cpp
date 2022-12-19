@@ -1,3 +1,14 @@
+/**
+ * @file db_file.cpp
+ * @author Michel Hecker Faria (12609690) - 100% de participação
+ * @author Guilherme Augusto Moreira (12547281) - 100% de participação
+ * @brief criação de todas as funções necessárias para manejamento e administração do arquivo database
+ * @version 0.1
+ * @date 2022-12-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "db_file.hpp"
 
 int getProxRRN(char *file){

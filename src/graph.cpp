@@ -1,3 +1,14 @@
+/**
+ * @file graph.cpp
+ * @author Michel Hecker Faria (12609690) - 100% de participação
+ * @author Guilherme Augusto Moreira (12547281) - 100% de participação
+ * @brief classe grafo com todos os métodos e atributos. essa classe também contém todos os algoritmos conhecidos para grafos
+ * @version 0.1
+ * @date 2022-12-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "graph.hpp"
 
 bool my_compare (const edge x,const edge y){

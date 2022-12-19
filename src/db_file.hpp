@@ -1,3 +1,14 @@
+/**
+ * @file db_file.hpp
+ * @author Michel Hecker Faria (12609690) - 100% de participação
+ * @author Guilherme Augusto Moreira (12547281) - 100% de participação
+ * @brief organização das funções utilizadas no arquivo database (db_file.cpp)
+ * @version 0.1
+ * @date 2022-12-18
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef __DB_FILE_HPP__
 #define __DB_FILE_HPP__
 
