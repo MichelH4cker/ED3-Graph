@@ -1,5 +1,12 @@
 #include "main.hpp"
 
+Graph inicialize_default(char *db_file) {
+    Graph graph;
+    graph.createGraph(db_file);
+    graph.sortList();
+    return graph;
+}
+
 void menu() {
     int command;
     scanf("%d\n", &command);
@@ -7,24 +14,26 @@ void menu() {
     char db_file[20];
     scanf("%s", db_file);
 
-    int n;
+    Graph graph;
+    int orig;
+    int dest;
 
-    Graph graph(getProxRRN(db_file));
     switch (command) {
         case 11:
-            graph.createGraph(db_file);
-            graph.sortList();
+            graph = inicialize_default(db_file);
             graph.printGraph();
             break;
         case 12:
+            graph = inicialize_default(db_file);
+            graph.count_cycles();
             break;
         case 13:
+            graph = inicialize_default(db_file);
+            graph.flow_max();
             break;
         case 14:
-            scanf("%d", &n);
-            graph.createGraph(db_file);
-            graph.sortList();
-            graph.shortestPathWithStop(n);
+            graph = inicialize_default(db_file);
+            graph.shortestPathWithStop();
             break;
         default:
             break;

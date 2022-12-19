@@ -5,11 +5,13 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
-#include <list>
 #include <map>
 #include <queue>
 #include <forward_list>
 #include <iterator>
+#include <vector>
+#include <queue>
+//#include <list>
 
 using namespace std;
 
