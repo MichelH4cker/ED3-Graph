@@ -267,8 +267,6 @@ void Graph::DFS_cycle(int v_current, int v_parent, int *color, int *par, int &cy
     color[v_current] = __black;
 }
 
-const int _inf = 9999999;
-
 int Graph::bfs(vertex origin, int destiny, pair<int, int> spent[]) {
     // TODO MUNDO VIRA ORFAO
     for (it = vertices.begin(); it != vertices.end(); ++it)
@@ -285,7 +283,7 @@ int Graph::bfs(vertex origin, int destiny, pair<int, int> spent[]) {
 
     // FIRST -> ONDE VOU, SECOND -> FLOW PRA ONDE VOU
     int flow_path[numberOfVertices];
-    flow_path[origin.idConecta] = _inf;
+    flow_path[origin.idConecta] = INFINITY;
 
     map<int, vertex>::iterator aux_it;
     while (!_queue.empty()) {
@@ -352,7 +350,7 @@ void Graph::edmond_karp (int origin, int destiny) {
         if (new_flow == 0)
             break;
 
-        int df = _inf;
+        int df = INFINITY;
         // DF PEGA O MENOR VALOR DE FLUXO DO CAMINHO
         for (itl = it->second.edges.begin(); itl != it->second.edges.end(); ++itl) {
             df = min(df, new_flow);
