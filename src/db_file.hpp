@@ -97,23 +97,6 @@ void readVariableField(FILE *fp, char *string);
 register_db readRegisterDB(FILE *fp);
 
 /**
- * @brief escreve os campos de tamanho variável no arquivo de dados
- *
- * @param fp ponteiro para o arquivo de dados
- * @param string campo de tamanho variável
- * @return int número de bytes escritos 
- */
-void fwriteVariableField(FILE *fp, char *string);
-
-/**
- * @brief escreve um registro no arquivo de dados
- *
- * @param fp ponteiro para o arquivo de dados
- * @param register_db registro a ser escrito no arquivo de dados
- */
-void fwriteRegisterDB(FILE *fp, register_db register_db);
-
-/**
  * @brief mostra no terminal a struct register_db. essa função é usada apenas para debug
  *
  * @param register_db registro a ser mostrado no terminal

@@ -152,6 +152,8 @@ void Graph::createGraph(char *db_file){
     header_db header_db = readHeaderDB(fp);
     numberOfVertices = header_db.proxRRN; 
 
+    header_db.status = '0'; // INCONSISTENTE
+
     // LIMITE DE LEITURA DO ARQUIVO DATABASE
     int endDB = header_db.proxRRN;
 
@@ -204,6 +206,11 @@ void Graph::createGraph(char *db_file){
         currentRRN++;
         goToRRNdb(currentRRN, fp);
     }
+
+    header_db.status = '1'; // CONSISTENTE NOVAMENTE
+
+    fwriteHeaderDB(fp, header_db);
+
     // FECHA ARQUIVO
     fclose(fp);
 }
